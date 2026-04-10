@@ -1,11 +1,16 @@
+from collections.abc import Generator
+
 import pytest
 
 from counter.service import DistributedCounter
 
 
 @pytest.fixture
-def distcounter() -> DistributedCounter:
-    return DistributedCounter()
+def distcounter() -> Generator[DistributedCounter, None, None]:
+    counter = DistributedCounter("localhost:4321", [])
+    counter.wait_until_ready(10)
+    yield counter
+    counter.destroy()
 
 
 def test_initialise_counter(distcounter: DistributedCounter) -> None:
