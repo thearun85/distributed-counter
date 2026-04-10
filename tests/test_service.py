@@ -39,6 +39,7 @@ def test_reset(distcounter: DistributedCounter) -> None:
     distcounter.reset()
     assert distcounter.get() == 0
 
+
 def test_multiple_increments(distcounter: DistributedCounter) -> None:
     distcounter.increment(4)
     assert distcounter.get() == 4
@@ -46,6 +47,7 @@ def test_multiple_increments(distcounter: DistributedCounter) -> None:
     assert distcounter.get() == 14
     distcounter.increment(100)
     assert distcounter.get() == 114
+
 
 def test_multiple_decrements(distcounter: DistributedCounter) -> None:
     distcounter.increment(100)
@@ -56,6 +58,7 @@ def test_multiple_decrements(distcounter: DistributedCounter) -> None:
     distcounter.decrement(100)
     assert distcounter.get() == -14
 
+
 def test_multiple_operations(distcounter: DistributedCounter) -> None:
     distcounter.increment(100)
     distcounter.decrement(4)
@@ -65,18 +68,22 @@ def test_multiple_operations(distcounter: DistributedCounter) -> None:
     distcounter.increment(1000)
     assert distcounter.get() == 1000
 
+
 def test_increment_amount_must_be_positive(distcounter: DistributedCounter) -> None:
     with pytest.raises(ValueError, match="amount must be >=1, got "):
         distcounter.increment(-10)
 
+
 def test_increment_amount_cannot_be_zero(distcounter: DistributedCounter) -> None:
-    with pytest.raises(ValueError, match = "amount must be >=1, got "):
+    with pytest.raises(ValueError, match="amount must be >=1, got "):
         distcounter.increment(0)
 
+
 def test_decrement_amount_must_be_positive(distcounter: DistributedCounter) -> None:
-    with pytest.raises(ValueError, match = "amount must be >=1, got "):
+    with pytest.raises(ValueError, match="amount must be >=1, got "):
         distcounter.decrement(-10)
 
+
 def test_decrement_amount_cannot_be_zero(distcounter: DistributedCounter) -> None:
-    with pytest.raises(ValueError, match = "amount must be >=1, got "):
+    with pytest.raises(ValueError, match="amount must be >=1, got "):
         distcounter.decrement(0)
